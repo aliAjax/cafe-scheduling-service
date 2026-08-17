@@ -3,10 +3,12 @@ package roster
 import (
 	"context"
 	"fmt"
+	"sync"
 	"time"
 )
 
 type Planner struct {
+	mu      sync.Mutex
 	store   *Store
 	cache   *Cache
 	metrics *Metrics
@@ -17,6 +19,9 @@ func NewPlanner(store *Store, cache *Cache, metrics *Metrics) *Planner {
 }
 
 func (p *Planner) Import(ctx context.Context, assignments []Assignment) error {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+
 	if err := ctx.Err(); err != nil {
 		return err
 	}
@@ -36,6 +41,9 @@ func (p *Planner) Import(ctx context.Context, assignments []Assignment) error {
 }
 
 func (p *Planner) Week(ctx context.Context, weekStart string) (WeekView, error) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+
 	if err := ctx.Err(); err != nil {
 		return WeekView{}, err
 	}
