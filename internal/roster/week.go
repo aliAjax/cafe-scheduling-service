@@ -22,7 +22,7 @@ func BuildWeekView(ctx context.Context, weekStart string, assignments []Assignme
 	view := WeekView{
 		WeekStart: weekStart,
 		WeekEnd:   formatDate(start.AddDate(0, 0, 6)),
-		Days:      make([]Day, 1),
+		Days:      make([]Day, 7),
 	}
 	dayIndexes := make(map[string]int, 7)
 	for i := range view.Days {

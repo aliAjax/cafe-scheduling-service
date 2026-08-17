@@ -26,7 +26,16 @@ type WeekView struct {
 }
 
 func cloneAssignment(a Assignment) Assignment {
-	return a
+	copyOf := a
+	if a.Note != nil {
+		note := *a.Note
+		copyOf.Note = &note
+	}
+	if a.Tags != nil {
+		copyOf.Tags = make([]string, len(a.Tags))
+		copy(copyOf.Tags, a.Tags)
+	}
+	return copyOf
 }
 
 func cloneDay(day Day) Day {

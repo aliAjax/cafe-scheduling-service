@@ -24,7 +24,7 @@ func (s *Store) Save(ctx context.Context, assignments []Assignment) error {
 		if err := validateAssignment(ctx, assignment); err != nil {
 			return err
 		}
-		validated[i] = assignment
+		validated[i] = cloneAssignment(assignment)
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -42,7 +42,7 @@ func (s *Store) List(ctx context.Context) ([]Assignment, error) {
 	defer s.mu.RUnlock()
 	items := make([]Assignment, 0, len(s.assignments))
 	for _, assignment := range s.assignments {
-		items = append(items, assignment)
+		items = append(items, cloneAssignment(assignment))
 	}
 	sort.Slice(items, func(i, j int) bool { return items[i].ID < items[j].ID })
 	return items, nil
