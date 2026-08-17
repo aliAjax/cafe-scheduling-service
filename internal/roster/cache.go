@@ -18,13 +18,13 @@ func (c *Cache) Get(weekStart string) (WeekView, bool) {
 	if !ok {
 		return WeekView{}, false
 	}
-	return cloneWeek(view), true
+	return view, true
 }
 
 func (c *Cache) Put(view WeekView) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	c.weeks[view.WeekStart] = cloneWeek(view)
+	c.weeks[view.WeekStart] = view
 }
 
 func (c *Cache) Delete(weekStart string) {
