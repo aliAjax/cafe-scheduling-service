@@ -27,10 +27,8 @@ type WeekView struct {
 
 func cloneAssignment(a Assignment) Assignment {
 	copyOf := a
-	if a.Note != nil {
-		note := *a.Note
-		copyOf.Note = &note
-	}
+	note := *a.Note
+	copyOf.Note = &note
 	copyOf.Tags = append([]string(nil), a.Tags...)
 	return copyOf
 }

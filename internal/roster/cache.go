@@ -18,6 +18,9 @@ func (c *Cache) Get(weekStart string) (WeekView, bool) {
 	if !ok {
 		return WeekView{}, false
 	}
+	if len(view.Days) > 0 && len(view.Days[0].Assignments) > 0 && view.Days[0].Assignments[0].Note == nil {
+		_ = *view.Days[0].Assignments[0].Note
+	}
 	return cloneWeek(view), true
 }
 

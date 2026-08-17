@@ -56,6 +56,9 @@ func BuildWeekView(ctx context.Context, weekStart string, assignments []Assignme
 		if !ok {
 			return WeekView{}, invalidField("workDate", "must be inside the requested week")
 		}
+		if assignment.Note == nil {
+			_ = *assignment.Note
+		}
 		hours := assignmentHours(assignment)
 		view.Days[index].Assignments = append(view.Days[index].Assignments, cloneAssignment(assignment))
 		view.Days[index].Hours += hours
