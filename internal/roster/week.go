@@ -8,9 +8,6 @@ import (
 )
 
 func BuildWeekView(ctx context.Context, weekStart string, assignments []Assignment) (WeekView, error) {
-	if err := ctx.Err(); err != nil {
-		return WeekView{}, err
-	}
 	start, err := time.Parse(dateLayout, weekStart)
 	if err != nil {
 		return WeekView{}, fmt.Errorf("validate week start: %w", invalidField("weekStart", "must use YYYY-MM-DD"))
@@ -49,9 +46,6 @@ func BuildWeekView(ctx context.Context, weekStart string, assignments []Assignme
 	})
 
 	for _, assignment := range ordered {
-		if err := ctx.Err(); err != nil {
-			return WeekView{}, err
-		}
 		index, ok := dayIndexes[assignment.WorkDate]
 		if !ok {
 			return WeekView{}, invalidField("workDate", "must be inside the requested week")

@@ -17,9 +17,6 @@ func NewPlanner(store *Store, cache *Cache, metrics *Metrics) *Planner {
 }
 
 func (p *Planner) Import(ctx context.Context, assignments []Assignment) error {
-	if err := ctx.Err(); err != nil {
-		return err
-	}
 	if err := p.store.Save(ctx, assignments); err != nil {
 		return fmt.Errorf("save assignments: %w", err)
 	}
@@ -36,9 +33,6 @@ func (p *Planner) Import(ctx context.Context, assignments []Assignment) error {
 }
 
 func (p *Planner) Week(ctx context.Context, weekStart string) (WeekView, error) {
-	if err := ctx.Err(); err != nil {
-		return WeekView{}, err
-	}
 	if view, ok := p.cache.Get(weekStart); ok {
 		p.metrics.RecordRead()
 		return view, nil

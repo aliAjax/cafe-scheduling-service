@@ -9,9 +9,6 @@ import (
 const dateLayout = "2006-01-02"
 
 func validateAssignment(ctx context.Context, assignment Assignment) error {
-	if err := ctx.Err(); err != nil {
-		return err
-	}
 	if assignment.ID <= 0 {
 		return invalidField("id", "must be positive")
 	}

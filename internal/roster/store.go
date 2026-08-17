@@ -16,9 +16,6 @@ func NewStore() *Store {
 }
 
 func (s *Store) Save(ctx context.Context, assignments []Assignment) error {
-	if err := ctx.Err(); err != nil {
-		return err
-	}
 	validated := make([]Assignment, len(assignments))
 	for i, assignment := range assignments {
 		if err := validateAssignment(ctx, assignment); err != nil {
@@ -35,9 +32,6 @@ func (s *Store) Save(ctx context.Context, assignments []Assignment) error {
 }
 
 func (s *Store) List(ctx context.Context) ([]Assignment, error) {
-	if err := ctx.Err(); err != nil {
-		return nil, err
-	}
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	items := make([]Assignment, 0, len(s.assignments))
