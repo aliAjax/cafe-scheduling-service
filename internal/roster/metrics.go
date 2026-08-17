@@ -1,20 +1,21 @@
 package roster
 
-import "sync/atomic"
+import "sync"
 
 type Metrics struct {
-	imports atomic.Int64
-	reads   atomic.Int64
+	mu      sync.Mutex
+	imports int64
+	reads   int64
 }
 
 func (m *Metrics) RecordImport(count int) {
-	m.imports.Add(int64(count))
+	m.imports += int64(count)
 }
 
 func (m *Metrics) RecordRead() {
-	m.reads.Add(1)
+	m.reads++
 }
 
 func (m *Metrics) Snapshot() (imports, reads int64) {
-	return m.imports.Load(), m.reads.Load()
+	return m.imports, m.reads
 }

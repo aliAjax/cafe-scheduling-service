@@ -12,8 +12,6 @@ func NewCache() *Cache {
 }
 
 func (c *Cache) Get(weekStart string) (WeekView, bool) {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
 	view, ok := c.weeks[weekStart]
 	if !ok {
 		return WeekView{}, false
@@ -22,13 +20,9 @@ func (c *Cache) Get(weekStart string) (WeekView, bool) {
 }
 
 func (c *Cache) Put(view WeekView) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
 	c.weeks[view.WeekStart] = cloneWeek(view)
 }
 
 func (c *Cache) Delete(weekStart string) {
-	c.mu.Lock()
-	defer c.mu.Unlock()
 	delete(c.weeks, weekStart)
 }

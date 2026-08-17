@@ -10,6 +10,7 @@ type Planner struct {
 	store   *Store
 	cache   *Cache
 	metrics *Metrics
+	scratch []Assignment
 }
 
 func NewPlanner(store *Store, cache *Cache, metrics *Metrics) *Planner {
@@ -47,7 +48,8 @@ func (p *Planner) Week(ctx context.Context, weekStart string) (WeekView, error) 
 	if err != nil {
 		return WeekView{}, fmt.Errorf("list assignments: %w", err)
 	}
-	view, err := BuildWeekView(ctx, weekStart, assignments)
+	p.scratch = assignments
+	view, err := BuildWeekView(ctx, weekStart, p.scratch)
 	if err != nil {
 		return WeekView{}, fmt.Errorf("build week view: %w", err)
 	}
