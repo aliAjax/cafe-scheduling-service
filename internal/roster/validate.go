@@ -23,11 +23,11 @@ func validateAssignment(ctx context.Context, assignment Assignment) error {
 	}
 	start, err := parseClock(assignment.StartTime)
 	if err != nil {
-		return fmt.Errorf("validate start time: %v", invalidField("startTime", err.Error()))
+		return fmt.Errorf("validate start time: %w", invalidField("startTime", err.Error()))
 	}
 	end, err := parseClock(assignment.EndTime)
 	if err != nil {
-		return fmt.Errorf("validate end time: %v", invalidField("endTime", err.Error()))
+		return fmt.Errorf("validate end time: %w", invalidField("endTime", err.Error()))
 	}
 	if start == end {
 		return invalidField("endTime", "must differ from startTime")

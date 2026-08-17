@@ -21,7 +21,7 @@ func (p *Planner) Import(ctx context.Context, assignments []Assignment) error {
 		return err
 	}
 	if err := p.store.Save(ctx, assignments); err != nil {
-		return fmt.Errorf("save assignments: %v", err)
+		return fmt.Errorf("save assignments: %w", err)
 	}
 	for _, assignment := range assignments {
 		date, err := time.Parse(dateLayout, assignment.WorkDate)

@@ -18,7 +18,7 @@ func (e *FieldError) Error() string {
 }
 
 func (e *FieldError) Unwrap() error {
-	return nil
+	return e.Err
 }
 
 func invalidField(field, message string) error {

@@ -34,7 +34,7 @@ func BuildWeekView(ctx context.Context, weekStart string, assignments []Assignme
 	ordered := make([]Assignment, len(assignments))
 	for i, assignment := range assignments {
 		if err := validateAssignment(ctx, assignment); err != nil {
-			return WeekView{}, fmt.Errorf("assignment %d: %v", i, err)
+			return WeekView{}, fmt.Errorf("assignment %d: %w", i, err)
 		}
 		ordered[i] = cloneAssignment(assignment)
 	}
